@@ -8,8 +8,8 @@ const REFRESH_TOKEN_EXPIRY_MS = 1000 * 60 * 60 * 24 * 7;
 export const getCookieOptions = (): CookieOptions => {
     return {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
     };
 };
 

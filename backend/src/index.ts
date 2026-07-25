@@ -13,10 +13,12 @@ const PORT = process.env.PORT || 8080;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 app.use(express.json());
-app.use(cors({
-  origin: FRONTEND_URL,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+    credentials: true,
+  }),
+);
 app.use(helmet());
 app.use(cookieParser());
 
@@ -29,7 +31,10 @@ app.use((_, res) => {
 });
 
 connectDB().catch((error) => {
-  console.error("Database connection could not be established immediately.", error);
+  console.error(
+    "Database connection could not be established immediately.",
+    error,
+  );
 });
 
 if (process.env.NODE_ENV !== "production") {
@@ -39,4 +44,3 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default app;
-

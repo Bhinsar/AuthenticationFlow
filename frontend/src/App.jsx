@@ -9,8 +9,19 @@ import MainPage from './pages/main';
 import HomePage from './pages/home/index.js';
 import Layout from './layout/layout';
 
+function ProtectedRoute({ children }) {
+  const { isAuthenticated } = userAuthStore();
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+}
+
+
+function PublicOnlyRoute({ children }) {
+  const { isAuthenticated } = userAuthStore();
+  return isAuthenticated ? <Navigate to="/home" replace /> : children;
+}
+
 function App() {
-  const { isAuthenticated, isCheckingAuth } = userAuthStore();
+  const { isCheckingAuth } = userAuthStore();
 
   useEffect(() => {
     checkUser();
@@ -27,15 +38,37 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/login"    element={<Layout><LoginPage /></Layout>} />
-        <Route path="/register" element={<Layout><RegisterPage /></Layout>} />
-        <Route path="/"         element={<Layout><MainPage /></Layout>} />
+        <Route
+          path="/"
+          element={
+            <PublicOnlyRoute>
+              <Layout><MainPage /></Layout>
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <Layout><LoginPage /></Layout>
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicOnlyRoute>
+              <Layout><RegisterPage /></Layout>
+            </PublicOnlyRoute>
+          }
+        />
+
         <Route
           path="/home"
           element={
-            isAuthenticated
-              ? <HomePage />
-              : <Navigate to="/login" replace />
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
           }
         />
       </Routes>

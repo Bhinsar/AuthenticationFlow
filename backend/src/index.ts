@@ -28,20 +28,15 @@ app.use((_, res) => {
   res.status(404).json({ message: "Not Found" });
 });
 
+connectDB().catch((error) => {
+  console.error("Database connection could not be established immediately.", error);
+});
 
-
-const startServer = async () => {
-  try {
-    await connectDB();
-  } catch (error) {
-    console.error("Database connection could not be established immediately.");
-  }
-
+if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-};
-
-startServer();
+}
 
 export default app;
+

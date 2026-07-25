@@ -33,12 +33,10 @@ export const logout = async () => {
   }
 };
 
-// Called once on every browser reload — hits /auth/refresh with the
-// httpOnly cookie. If valid, server rotates the cookie and returns the user.
 export const checkUser = async () => {
   userAuthStore.getState().setCheckingAuth(true);
   try {
-    const { data } = await axiosInstance.post(AuthApiEndPoint.REFRESH);
+    const { data } = await axiosInstance.post(AuthApiEndPoint.CHECK);
     userAuthStore.getState().setAuth(data.user);
     return data;
   } catch (error) {

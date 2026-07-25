@@ -3,6 +3,6 @@ export const AuthApiEndPoint = {
     REGISTER: "/auth/register",
     LOGOUT: "/auth/logout",
     REFRESH: "/auth/refresh",
-    CHECK_EMAIL: "/auth/check",
+    CHECK: "/auth/check",
 }
 

@@ -26,7 +26,8 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const isRefreshUrl = originalRequest.url?.includes(AuthApiEndPoint.REFRESH);
+    if (error.response?.status === 401 && !originalRequest._retry && !isRefreshUrl) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });

@@ -34,7 +34,7 @@ function App() {
           path="/home"
           element={
             isAuthenticated
-              ? <Layout><HomePage /></Layout>
+              ? <HomePage />
               : <Navigate to="/login" replace />
           }
         />

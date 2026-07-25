@@ -36,7 +36,7 @@ export const logout = async () => {
 export const checkUser = async () => {
   userAuthStore.getState().setCheckingAuth(true);
   try {
-    const { data } = await axiosInstance.post(AuthApiEndPoint.CHECK);
+    const { data } = await axiosInstance.get(AuthApiEndPoint.CHECK);
     userAuthStore.getState().setAuth(data.user);
     return data;
   } catch (error) {
